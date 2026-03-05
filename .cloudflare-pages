@@ -1,0 +1,15 @@
+# Cloudflare Pages Configuration
+# This project uses Next.js STATIC EXPORT, not Workers/SSR
+
+# Build settings:
+Build command: npm run build
+Build output directory: out
+Root directory: /
+
+# Do NOT use:
+# - OpenNext adapter
+# - Wrangler deploy
+# - @cloudflare/next-on-pages
+
+# Environment variables required:
+# GITHUB_TOKEN=ghp_your_token_here
