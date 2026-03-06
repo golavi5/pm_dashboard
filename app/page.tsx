@@ -1,148 +1,111 @@
-// Dashboard homepage
+// Landing page with organization selector
 
-import type { DashboardData } from '@/lib/types';
-import { ProjectCard } from '@/components/ProjectCard';
-import { MetricCard } from '@/components/MetricCard';
-import { fetchAllProjects } from '@/lib/github';
-import { TRACKED_PROJECTS } from '@/config/projects';
+import Link from 'next/link';
+import { ORGANIZATIONS } from '@/config/organizations';
 
-async function getDashboardData(): Promise<DashboardData> {
-  try {
-    // Fetch directly from GitHub API at build time (for static export)
-    const projects = await fetchAllProjects(TRACKED_PROJECTS);
-    
-    return {
-      projects,
-      lastUpdated: new Date().toISOString()
-    };
-  } catch (error) {
-    console.error('Error fetching dashboard data:', error);
-    // Return empty data on error (graceful fallback)
-    return {
-      projects: [],
-      lastUpdated: new Date().toISOString()
-    };
-  }
-}
-
-export default async function Home() {
-  const data = await getDashboardData();
-  
-  // Calculate aggregate metrics
-  const totalTasksThisWeek = data.projects.reduce(
-    (sum, p) => sum + p.metrics.tasksCompletedThisWeek,
-    0
-  );
-  
-  const avgVelocity = data.projects.length > 0
-    ? Math.round(
-        data.projects.reduce((sum, p) => sum + p.metrics.velocity, 0) / 
-        data.projects.length
-      )
-    : 0;
-  
-  const onTimeProjects = data.projects.filter(
-    p => p.status === 'on-track'
-  ).length;
-  
-  const onTimePercentage = data.projects.length > 0
-    ? Math.round((onTimeProjects / data.projects.length) * 100)
-    : 100;
-  
-  const activeProjects = data.projects.filter(
-    p => p.phase !== 'Done'
-  ).length;
-
+export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-16">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-2">
-                PM Dashboard
-              </h1>
-              <p className="text-gray-600">
-                Project Management Dashboard for Stakeholders
-              </p>
-            </div>
-            <div className="text-right">
-              <p className="text-sm text-gray-500">Last updated</p>
-              <p className="text-sm font-medium text-gray-700">
-                {new Date(data.lastUpdated).toLocaleString('en-US', {
-                  month: 'short',
-                  day: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit'
-                })}
-              </p>
-            </div>
-          </div>
+        <div className="text-center mb-16">
+          <h1 className="text-5xl font-bold text-gray-900 mb-4">
+            PM Dashboard
+          </h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Executive dashboard for real-time project tracking. Select your organization to view detailed project metrics and status.
+          </p>
         </div>
 
-        {/* Executive Metrics */}
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">
-            📊 Executive Metrics
+        {/* Organization Selector */}
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-8 text-center">
+            Select Your Organization
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <MetricCard
-              title="Tasks This Week"
-              value={totalTasksThisWeek}
-              icon="✅"
-              trend={totalTasksThisWeek > 10 ? 'up' : 'stable'}
-              change={12}
-            />
-            <MetricCard
-              title="Avg Velocity"
-              value={`${avgVelocity}/week`}
-              icon="⚡"
-              trend="stable"
-              change={0}
-            />
-            <MetricCard
-              title="On Time"
-              value={`${onTimePercentage}%`}
-              icon="🎯"
-              trend={onTimePercentage >= 80 ? 'up' : 'stable'}
-              change={5}
-            />
-            <MetricCard
-              title="Active Projects"
-              value={activeProjects}
-              icon="🚀"
-              subtitle={`${data.projects.length} total`}
-            />
-          </div>
-        </div>
 
-        {/* Active Projects */}
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">
-            📋 Active Projects
-          </h2>
-          
-          {data.projects.length === 0 ? (
-            <div className="bg-white rounded-lg shadow p-8 text-center">
-              <p className="text-gray-500">
-                No projects configured. Add projects in{' '}
+          {ORGANIZATIONS.length === 0 ? (
+            <div className="bg-white rounded-lg shadow p-12 text-center">
+              <p className="text-gray-500 text-lg">
+                No organizations configured. Add organizations in{' '}
                 <code className="bg-gray-100 px-2 py-1 rounded">
-                  config/projects.ts
+                  config/organizations.ts
                 </code>
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {data.projects.map((project) => (
-                <ProjectCard key={project.id} project={project} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {ORGANIZATIONS.map((org) => (
+                <Link
+                  key={org.slug}
+                  href={`/org/${org.slug}`}
+                  className="group block"
+                >
+                  <div className="bg-white rounded-lg shadow hover:shadow-lg transition-shadow p-8 h-full cursor-pointer">
+                    <div className="flex items-start justify-between mb-4">
+                      <div>
+                        <h3 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors mb-2">
+                          {org.name}
+                        </h3>
+                        {org.description && (
+                          <p className="text-gray-600 mb-4">
+                            {org.description}
+                          </p>
+                        )}
+                      </div>
+                      <span className="text-3xl">📊</span>
+                    </div>
+
+                    <div className="border-t pt-4">
+                      <p className="text-sm text-gray-500 mb-2">
+                        Projects: <span className="font-semibold text-gray-900">{org.projects.length}</span>
+                      </p>
+                      <div className="flex items-center text-blue-600 group-hover:text-blue-800 transition-colors">
+                        View Dashboard
+                        <span className="ml-2">→</span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
               ))}
             </div>
           )}
         </div>
 
+        {/* Features */}
+        <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="text-center">
+            <div className="text-4xl mb-4">📈</div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              Real-Time Tracking
+            </h3>
+            <p className="text-gray-600">
+              See project progress, metrics, and status updates in real-time
+            </p>
+          </div>
+
+          <div className="text-center">
+            <div className="text-4xl mb-4">🔒</div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              Organization-Specific
+            </h3>
+            <p className="text-gray-600">
+              Each organization sees only their own projects
+            </p>
+          </div>
+
+          <div className="text-center">
+            <div className="text-4xl mb-4">⚡</div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              Lightning Fast
+            </h3>
+            <p className="text-gray-600">
+              Cached dashboards load in under 2 seconds
+            </p>
+          </div>
+        </div>
+
         {/* Footer */}
-        <div className="text-center text-sm text-gray-500 mt-12">
+        <div className="text-center text-sm text-gray-500 mt-20">
           <p>
             Powered by{' '}
             <a
@@ -153,12 +116,6 @@ export default async function Home() {
             >
               GitHub Projects API
             </a>
-            {' • '}
-            Built at {new Date(data.lastUpdated).toLocaleString('en-US', {
-              month: 'short',
-              day: 'numeric',
-              year: 'numeric'
-            })}
           </p>
         </div>
       </div>
