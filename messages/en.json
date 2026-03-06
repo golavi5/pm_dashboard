@@ -1,0 +1,81 @@
+{
+  "dashboard": {
+    "title": "PM Dashboard",
+    "subtitle": "Project Management Dashboard for Stakeholders",
+    "selectOrg": "Select Your Organization",
+    "lastUpdated": "Last updated",
+    "executiveMetrics": "Executive Metrics",
+    "activeProjects": "Active Projects",
+    "poweredBy": "Powered by"
+  },
+  "landing": {
+    "title": "PM Dashboard",
+    "subtitle": "Executive dashboard for real-time project tracking. Select your organization to view detailed project metrics and status.",
+    "selectOrganization": "Select Your Organization",
+    "noOrgsConfigured": "No organizations configured. Add organizations in",
+    "viewDashboard": "View Dashboard",
+    "realTimeTracking": "Real-Time Tracking",
+    "realTimeDesc": "See project progress, metrics, and status updates in real-time",
+    "orgSpecific": "Organization-Specific",
+    "orgDesc": "Each organization sees only their own projects",
+    "lightningFast": "Lightning Fast",
+    "fastDesc": "Cached dashboards load in under 2 seconds",
+    "projects": "Projects",
+    "poweredBy": "Powered by"
+  },
+  "metrics": {
+    "tasksThisWeek": "Tasks This Week",
+    "avgVelocity": "Avg Velocity",
+    "onTime": "On Time",
+    "activeProjects": "Active Projects",
+    "total": "total",
+    "per_week": "/week"
+  },
+  "status": {
+    "onTrack": "On Track",
+    "attention": "Needs Attention",
+    "blocked": "Blocked"
+  },
+  "project": {
+    "recentWins": "Recent Wins",
+    "inProgress": "In Progress",
+    "blockers": "Blockers",
+    "velocity": "Velocity",
+    "thisWeek": "This Week",
+    "estComplete": "Est. Complete",
+    "noProjects": "No projects configured for this organization."
+  },
+  "organization": {
+    "groupZ5": "Grupo Z5",
+    "groupZ5Desc": "Grupo Z5 development projects",
+    "personal": "Personal Projects",
+    "personalDesc": "Personal development projects",
+    "notFound": "Organization Not Found",
+    "notFoundDesc": "The organization you're looking for doesn't exist or hasn't been configured.",
+    "backToDashboard": "Back to Dashboard"
+  },
+  "error": {
+    "somethingWrong": "Something went wrong",
+    "failedLoadData": "Failed to load dashboard data",
+    "checkToken": "If the problem persists, check:",
+    "tokenVar": "GITHUB_TOKEN environment variable is set",
+    "tokenPerms": "Token has required permissions (project, repo)",
+    "projectNumbers": "Project numbers in config/projects.ts are correct",
+    "tryAgain": "Try Again"
+  },
+  "theme": {
+    "switchDark": "Switch to dark mode",
+    "switchLight": "Switch to light mode"
+  },
+  "language": {
+    "english": "English",
+    "spanish": "Español"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning",
+    "info": "Info"
+  }
+}

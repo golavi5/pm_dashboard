@@ -1,5 +1,4 @@
-// Organization-specific dashboard page
-// Example: /org/grupo-z5, /org/golavi5
+// Organization-specific dashboard page with locale support
 
 import { notFound } from 'next/navigation';
 import type { DashboardData } from '@/lib/types';
@@ -9,6 +8,7 @@ import { getOrganization, getAllOrganizationSlugs } from '@/config/organizations
 
 interface OrgPageProps {
   params: Promise<{
+    locale: string;
     slug: string;
   }>;
 }
@@ -37,11 +37,17 @@ async function getOrgDashboardData(slug: string): Promise<DashboardData> {
   }
 }
 
-// Generate static params for all organizations
+// Generate static params for all organizations and locales
 export async function generateStaticParams() {
-  return getAllOrganizationSlugs().map((slug) => ({
-    slug
-  }));
+  const locales = ['en', 'es'];
+  const slugs = getAllOrganizationSlugs();
+  
+  return locales.flatMap((locale) =>
+    slugs.map((slug) => ({
+      locale,
+      slug,
+    }))
+  );
 }
 
 // Set revalidation time for ISR (Incremental Static Regeneration)
