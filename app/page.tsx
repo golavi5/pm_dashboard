@@ -3,22 +3,21 @@
 import type { DashboardData } from '@/lib/types';
 import { ProjectCard } from '@/components/ProjectCard';
 import { MetricCard } from '@/components/MetricCard';
+import { fetchAllProjects } from '@/lib/github';
+import { TRACKED_PROJECTS } from '@/config/projects';
 
 async function getDashboardData(): Promise<DashboardData> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/projects`, {
-      next: { revalidate: 3600 } // Cache for 1 hour
-    });
+    // Fetch directly from GitHub API at build time (for static export)
+    const projects = await fetchAllProjects(TRACKED_PROJECTS);
     
-    if (!res.ok) {
-      throw new Error('Failed to fetch projects');
-    }
-    
-    return res.json();
+    return {
+      projects,
+      lastUpdated: new Date().toISOString()
+    };
   } catch (error) {
     console.error('Error fetching dashboard data:', error);
-    // Return empty data on error
+    // Return empty data on error (graceful fallback)
     return {
       projects: [],
       lastUpdated: new Date().toISOString()
@@ -155,7 +154,11 @@ export default async function Home() {
               GitHub Projects API
             </a>
             {' • '}
-            Updates hourly
+            Built at {new Date(data.lastUpdated).toLocaleString('en-US', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric'
+            })}
           </p>
         </div>
       </div>
