@@ -31,76 +31,119 @@ const githubGraphQL = graphql.defaults({
 
 /**
  * Fetch project data from GitHub Projects API
- * Handles both user and organization projects
  */
 export async function fetchGitHubProject(
   owner: string,
   projectNumber: number
 ): Promise<GitHubProject> {
-  // Fragment for project fields (shared between user and org)
-  const projectFields = `
-    id
-    number
-    title
-    url
-    items(first: 100) {
-      nodes {
-        id
-        content {
-          __typename
-          ... on Issue {
-            number
-            title
-            state
-            url
-            createdAt
-            closedAt
-            labels(first: 10) {
-              nodes {
-                name
-              }
-            }
-          }
-        }
-        fieldValues(first: 10) {
-          nodes {
-            __typename
-            ... on ProjectV2ItemFieldSingleSelectValue {
-              field {
-                ... on ProjectV2SingleSelectField {
-                  name
-                }
-              }
-              name
-            }
-            ... on ProjectV2ItemFieldTextValue {
-              field {
-                ... on ProjectV2Field {
-                  name
-                }
-              }
-              text
-            }
-          }
-        }
-      }
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-    }
-  `;
-
   const query = `
     query($owner: String!, $number: Int!) {
       user(login: $owner) {
         projectV2(number: $number) {
-          ${projectFields}
+          id
+          number
+          title
+          url
+          items(first: 100) {
+            nodes {
+              id
+              content {
+                __typename
+                ... on Issue {
+                  number
+                  title
+                  state
+                  url
+                  createdAt
+                  closedAt
+                  labels(first: 10) {
+                    nodes {
+                      name
+                    }
+                  }
+                }
+              }
+              fieldValues(first: 10) {
+                nodes {
+                  __typename
+                  ... on ProjectV2ItemFieldSingleSelectValue {
+                    field {
+                      ... on ProjectV2SingleSelectField {
+                        name
+                      }
+                    }
+                    name
+                  }
+                  ... on ProjectV2ItemFieldTextValue {
+                    field {
+                      ... on ProjectV2Field {
+                        name
+                      }
+                    }
+                    text
+                  }
+                }
+              }
+            }
+            pageInfo {
+              hasNextPage
+              endCursor
+            }
+          }
         }
       }
       organization(login: $owner) {
         projectV2(number: $number) {
-          ${projectFields}
+          id
+          number
+          title
+          url
+          items(first: 100) {
+            nodes {
+              id
+              content {
+                __typename
+                ... on Issue {
+                  number
+                  title
+                  state
+                  url
+                  createdAt
+                  closedAt
+                  labels(first: 10) {
+                    nodes {
+                      name
+                    }
+                  }
+                }
+              }
+              fieldValues(first: 10) {
+                nodes {
+                  __typename
+                  ... on ProjectV2ItemFieldSingleSelectValue {
+                    field {
+                      ... on ProjectV2SingleSelectField {
+                        name
+                      }
+                    }
+                    name
+                  }
+                  ... on ProjectV2ItemFieldTextValue {
+                    field {
+                      ... on ProjectV2Field {
+                        name
+                      }
+                    }
+                    text
+                  }
+                }
+              }
+            }
+            pageInfo {
+              hasNextPage
+              endCursor
+            }
+          }
         }
       }
     }
@@ -118,14 +161,6 @@ export async function fetchGitHubProject(
     
     return project as GitHubProject;
   } catch (error) {
-    // GraphQL returns errors even when one query fails, check if we got data
-    if (error && typeof error === 'object' && 'data' in error) {
-      const data = (error as any).data;
-      const project = data?.user?.projectV2 || data?.organization?.projectV2;
-      if (project) {
-        return project as GitHubProject;
-      }
-    }
     console.error('Error fetching GitHub project:', error);
     throw error;
   }
