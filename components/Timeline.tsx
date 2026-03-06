@@ -27,11 +27,11 @@ export function Timeline({ milestones }: TimelineProps) {
 
   const getStatusColor = (status: Milestone['status']) => {
     switch (status) {
-      case 'completed': return 'text-green-600';
-      case 'in-progress': return 'text-blue-600';
-      case 'upcoming': return 'text-gray-600';
-      case 'overdue': return 'text-red-600';
-      default: return 'text-gray-500';
+      case 'completed': return 'text-green-600 dark:text-green-400';
+      case 'in-progress': return 'text-blue-600 dark:text-blue-400';
+      case 'upcoming': return 'text-gray-600 dark:text-gray-400';
+      case 'overdue': return 'text-red-600 dark:text-red-400';
+      default: return 'text-gray-500 dark:text-gray-400';
     }
   };
 
@@ -46,7 +46,7 @@ export function Timeline({ milestones }: TimelineProps) {
             <p className={`text-sm font-medium ${getStatusColor(milestone.status)}`}>
               {milestone.title}
             </p>
-            <p className="text-xs text-gray-500 mt-0.5">
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
               {new Date(milestone.dueDate).toLocaleDateString('en-US', {
                 month: 'short',
                 day: 'numeric',
