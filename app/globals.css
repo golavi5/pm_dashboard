@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Dark mode transitions */
+html {
+  color-scheme: light dark;
+}
+
+body {
+  @apply transition-colors duration-200;
+}
+
+/* Prevent theme flash on page load */
+html:not(.dark) {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}

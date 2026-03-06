@@ -32,7 +32,7 @@ export function ProgressBar({
 
   return (
     <div className="w-full">
-      <div className={`w-full bg-gray-200 rounded-full overflow-hidden ${heights[size]}`}>
+      <div className={`w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden ${heights[size]} transition-colors duration-200`}>
         <div
           className={`${getColor()} ${heights[size]} rounded-full transition-all duration-500 ease-out`}
           style={{ width: `${percentage}%` }}
@@ -40,8 +40,8 @@ export function ProgressBar({
       </div>
       {showLabel && (
         <div className="flex justify-between items-center mt-1">
-          <span className="text-xs text-gray-500">Progress</span>
-          <span className="text-sm font-semibold text-gray-700">{percentage}%</span>
+          <span className="text-xs text-gray-500 dark:text-gray-400">Progress</span>
+          <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">{percentage}%</span>
         </div>
       )}
     </div>
