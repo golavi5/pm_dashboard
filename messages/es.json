@@ -1,0 +1,81 @@
+{
+  "dashboard": {
+    "title": "Panel de Gestión",
+    "subtitle": "Panel de Gestión de Proyectos para Stakeholders",
+    "selectOrg": "Seleccionar su Organización",
+    "lastUpdated": "Última actualización",
+    "executiveMetrics": "Métricas Ejecutivas",
+    "activeProjects": "Proyectos Activos",
+    "poweredBy": "Impulsado por"
+  },
+  "landing": {
+    "title": "Panel de Gestión",
+    "subtitle": "Panel ejecutivo para el seguimiento en tiempo real de proyectos. Seleccione su organización para ver métricas detalladas del proyecto y estado.",
+    "selectOrganization": "Seleccionar su Organización",
+    "noOrgsConfigured": "No hay organizaciones configuradas. Agregue organizaciones en",
+    "viewDashboard": "Ver Panel",
+    "realTimeTracking": "Seguimiento en Tiempo Real",
+    "realTimeDesc": "Vea el progreso del proyecto, métricas y actualizaciones de estado en tiempo real",
+    "orgSpecific": "Específico de la Organización",
+    "orgDesc": "Cada organización ve solo sus propios proyectos",
+    "lightningFast": "Extremadamente Rápido",
+    "fastDesc": "Los paneles en caché se cargan en menos de 2 segundos",
+    "projects": "Proyectos",
+    "poweredBy": "Impulsado por"
+  },
+  "metrics": {
+    "tasksThisWeek": "Tareas Esta Semana",
+    "avgVelocity": "Velocidad Promedio",
+    "onTime": "A Tiempo",
+    "activeProjects": "Proyectos Activos",
+    "total": "total",
+    "per_week": "/semana"
+  },
+  "status": {
+    "onTrack": "En Progreso",
+    "attention": "Requiere Atención",
+    "blocked": "Bloqueado"
+  },
+  "project": {
+    "recentWins": "Logros Recientes",
+    "inProgress": "En Progreso",
+    "blockers": "Bloqueos",
+    "velocity": "Velocidad",
+    "thisWeek": "Esta Semana",
+    "estComplete": "Est. Finalización",
+    "noProjects": "No hay proyectos configurados para esta organización."
+  },
+  "organization": {
+    "groupZ5": "Grupo Z5",
+    "groupZ5Desc": "Proyectos de desarrollo de Grupo Z5",
+    "personal": "Proyectos Personales",
+    "personalDesc": "Proyectos de desarrollo personal",
+    "notFound": "Organización No Encontrada",
+    "notFoundDesc": "La organización que busca no existe o no ha sido configurada.",
+    "backToDashboard": "Volver al Panel"
+  },
+  "error": {
+    "somethingWrong": "Algo salió mal",
+    "failedLoadData": "Error al cargar los datos del panel",
+    "checkToken": "Si el problema persiste, verifique:",
+    "tokenVar": "La variable de entorno GITHUB_TOKEN está establecida",
+    "tokenPerms": "El token tiene los permisos requeridos (proyecto, repo)",
+    "projectNumbers": "Los números del proyecto en config/projects.ts son correctos",
+    "tryAgain": "Intentar de Nuevo"
+  },
+  "theme": {
+    "switchDark": "Cambiar a modo oscuro",
+    "switchLight": "Cambiar a modo claro"
+  },
+  "language": {
+    "english": "English",
+    "spanish": "Español"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "warning": "Advertencia",
+    "info": "Información"
+  }
+}

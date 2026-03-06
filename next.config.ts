@@ -1,8 +1,11 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from 'next-intl/plugin';
+
+const withNextIntl = createNextIntlPlugin('./i18n.ts');
 
 const nextConfig: NextConfig = {
   output: 'export',  // Static export for Cloudflare Pages
   images: { unoptimized: true },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

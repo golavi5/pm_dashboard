@@ -1,4 +1,4 @@
-// Loading state for homepage
+// Loading state for locale pages
 
 import { DashboardSkeleton } from '@/components/LoadingSkeleton';
 

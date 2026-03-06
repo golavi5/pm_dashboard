@@ -1,5 +1,8 @@
 // Reusable dashboard content component
 
+'use client';
+
+import { useTranslations } from 'next-intl';
 import type { DashboardData } from '@/lib/types';
 import { ProjectCard } from './ProjectCard';
 import { MetricCard } from './MetricCard';
@@ -11,6 +14,8 @@ interface DashboardContentProps {
 }
 
 export function DashboardContent({ data, title, subtitle }: DashboardContentProps) {
+  const t = useTranslations();
+  
   // Calculate aggregate metrics
   const totalTasksThisWeek = data.projects.reduce(
     (sum, p) => sum + p.metrics.tasksCompletedThisWeek,
@@ -51,7 +56,7 @@ export function DashboardContent({ data, title, subtitle }: DashboardContentProp
               </p>
             </div>
             <div className="text-right">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Last updated</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{t('dashboard.lastUpdated')}</p>
               <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 {new Date(data.lastUpdated).toLocaleString('en-US', {
                   month: 'short',
@@ -67,35 +72,35 @@ export function DashboardContent({ data, title, subtitle }: DashboardContentProp
         {/* Executive Metrics */}
         <div className="mb-8">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-            📊 Executive Metrics
+            📊 {t('dashboard.executiveMetrics')}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <MetricCard
-              title="Tasks This Week"
+              title={t('metrics.tasksThisWeek')}
               value={totalTasksThisWeek}
               icon="✅"
               trend={totalTasksThisWeek > 10 ? 'up' : 'stable'}
               change={12}
             />
             <MetricCard
-              title="Avg Velocity"
-              value={`${avgVelocity}/week`}
+              title={t('metrics.avgVelocity')}
+              value={`${avgVelocity}${t('metrics.per_week')}`}
               icon="⚡"
               trend="stable"
               change={0}
             />
             <MetricCard
-              title="On Time"
+              title={t('metrics.onTime')}
               value={`${onTimePercentage}%`}
               icon="🎯"
               trend={onTimePercentage >= 80 ? 'up' : 'stable'}
               change={5}
             />
             <MetricCard
-              title="Active Projects"
+              title={t('metrics.activeProjects')}
               value={activeProjects}
               icon="🚀"
-              subtitle={`${data.projects.length} total`}
+              subtitle={`${data.projects.length} ${t('metrics.total')}`}
             />
           </div>
         </div>
@@ -103,13 +108,13 @@ export function DashboardContent({ data, title, subtitle }: DashboardContentProp
         {/* Active Projects */}
         <div className="mb-8">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-            📋 Active Projects
+            📋 {t('dashboard.activeProjects')}
           </h2>
           
           {data.projects.length === 0 ? (
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-lg p-8 text-center transition-colors duration-200">
               <p className="text-gray-500 dark:text-gray-400">
-                No projects configured for this organization.
+                {t('project.noProjects')}
               </p>
             </div>
           ) : (
@@ -124,7 +129,7 @@ export function DashboardContent({ data, title, subtitle }: DashboardContentProp
         {/* Footer */}
         <div className="text-center text-sm text-gray-500 dark:text-gray-400 mt-12">
           <p>
-            Powered by{' '}
+            {t('dashboard.poweredBy')}{' '}
             <a
               href="https://github.com"
               target="_blank"
